@@ -1,7 +1,21 @@
 -- Plugins carried over from the work (AstroNvim) config
 return {
-  -- jk / jj to leave insert, visual and terminal mode
-  { "max397574/better-escape.nvim", event = "VeryLazy", opts = {} },
+  -- jk / jj to leave visual, terminal and command mode
+  -- (insert mode uses plain maps in config/keymaps.lua: better-escape types the
+  -- first j and then deletes it, which flickers)
+  {
+    "max397574/better-escape.nvim",
+    event = "VeryLazy",
+    opts = {
+      default_mappings = false,
+      mappings = {
+        c = { j = { k = "<C-c>", j = "<C-c>" } },
+        t = { j = { k = "<C-\\><C-n>" } },
+        v = { j = { k = "<Esc>" } },
+        s = { j = { k = "<Esc>" } },
+      },
+    },
+  },
 
   -- AI completion; accept with <C-g> in insert mode (first run: :Codeium Auth)
   {
@@ -157,6 +171,20 @@ return {
         end
       end
       strip(opts.spec or {})
+
+      -- русские подсказки; список по умолчанию повторён, т.к. opts.replace.desc его заменяет
+      opts.replace = opts.replace or {}
+      opts.replace.desc = {
+        { "<Plug>%(?(.*)%)?", "%1" },
+        { "^%+", "" },
+        { "<[cC]md>", "" },
+        { "<[cC][rR]>", "" },
+        { "<[sS]ilent>", "" },
+        { "^lua%s+", "" },
+        { "^call%s+", "" },
+        { "^:%s*", "" },
+        require("config.ru_desc").replace,
+      }
     end,
   },
 }

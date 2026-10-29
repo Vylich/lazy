@@ -37,6 +37,8 @@ map("t", "<C-x>", "<C-\\><C-n>", { desc = "Terminal Escape" })
 
 -- insert mode
 map("i", "оо", "<Esc>")
+map("i", "jj", "<Esc>")
+map("i", "jk", "<Esc>")
 map("i", "<C-b>", "<Esc>^i", { desc = "Move Beginning of Line" })
 map("i", "<C-e>", "<End>", { desc = "Move End of Line" })
 map("i", "<C-h>", "<Left>", { desc = "Move Left" })
@@ -68,6 +70,7 @@ map("x", "<leader>/", "gc", { remap = true, desc = "Toggle Comment" })
 -- diagnostics
 map("n", "<leader>a", vim.diagnostic.open_float, { desc = "Show Trouble" })
 map("n", "<leader>k", vim.diagnostic.open_float, { desc = "Open Diagnostic" })
+map("n", "<leader>K", function() require("config.translate").cursor() end, { desc = "Перевести ошибку/документацию" })
 
 -- trouble
 map("n", "<leader>qx", "<cmd>Trouble diagnostics toggle<cr>", { desc = "Open Trouble" })

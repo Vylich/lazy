@@ -48,6 +48,14 @@ function M.setup()
     return
   end
 
+  -- Local X11 session (tmux without SSH): Neovim's built-in provider already
+  -- talks to xclip/xsel, which this module doesn't support.
+  if not in_ssh and vim.env.DISPLAY ~= nil and vim.env.WAYLAND_DISPLAY == nil
+    and (vim.fn.executable("xclip") == 1 or vim.fn.executable("xsel") == 1) then
+    vim.opt.clipboard:append("unnamedplus")
+    return
+  end
+
   local osc52 = require("vim.ui.clipboard.osc52")
   local has_wayland = vim.env.WAYLAND_DISPLAY ~= nil
     and vim.fn.executable("wl-copy") == 1

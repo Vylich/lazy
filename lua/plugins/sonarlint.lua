@@ -27,6 +27,9 @@ return {
             analyzers .. "sonarhtml.jar",
             analyzers .. "sonarpython.jar",
           },
+          -- no telemetry: JVM flag is the hard switch, the setting covers the LSP side
+          cmd_env = { JAVA_TOOL_OPTIONS = "-Dsonarlint.telemetry.disabled=true" },
+          settings = { sonarlint = { disableTelemetry = true } },
         },
         filetypes = filetypes,
       })

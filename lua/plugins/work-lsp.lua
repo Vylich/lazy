@@ -46,6 +46,15 @@ return {
         html = {},
         rust_analyzer = {},
         somesass_ls = {},
+        -- сообщения об ошибках на русском (у TypeScript и pyright есть свои переводы)
+        vtsls = {
+          settings = {
+            typescript = { locale = "ru" },
+          },
+        },
+        pyright = {
+          cmd_env = { VSCODE_NLS_CONFIG = '{"locale":"ru"}' },
+        },
       },
     },
   },
@@ -56,6 +65,15 @@ return {
     opts = {
       keymap = {
         ["<C-k>"] = false,
+      },
+      -- навигация по выпадашке в cmdline; без меню — обычное поведение (история)
+      cmdline = {
+        keymap = {
+          ["<C-j>"] = { "select_next", "fallback" },
+          ["<C-k>"] = { "select_prev", "fallback" },
+          ["<Down>"] = { "select_next", "fallback" },
+          ["<Up>"] = { "select_prev", "fallback" },
+        },
       },
     },
   },
